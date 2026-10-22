@@ -881,6 +881,15 @@ SECP256K1_API int secp256k1_tagged_sha256(
     size_t msglen
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3) SECP256K1_ARG_NONNULL(5);
 
+/* NOTE (workagent): the module headers below are not part of upstream's umbrella. They are re-exported
+ * here so that `import libsecp256k1_zkp` from Swift can see them: a SwiftPM C target exposes only its
+ * umbrella header, and `secp256k1_rangeproof_*` is unreachable without this. The guard is kept even
+ * though each header guards itself, to stay honest about what was compiled. */
+#ifdef ENABLE_MODULE_RANGEPROOF
+#include "secp256k1_generator.h"
+#include "secp256k1_rangeproof.h"
+#endif
+
 #ifdef __cplusplus
 }
 #endif
