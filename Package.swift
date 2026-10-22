@@ -32,7 +32,12 @@ let package = Package(
         .library(name: "ZKP", targets: ["ZKP"])
     ],
     traits: [
-        .default(enabledTraits: ["ecdh", "musig", "recovery", "schnorrsig"]),
+        // NOTE (workagent): "generator" and "rangeproof" were added to the enabled defaults so the
+        // swarm can produce real zero-knowledge range proofs (secp256k1_rangeproof_sign/_verify).
+        // They are not enabled upstream. If this file is ever replaced by a fresh pin, check that
+        // WorkAgent/Telemetry/RangeProof.swift still compiles — it will not, and the symptom is a
+        // link error for `secp256k1_rangeproof_*` rather than a build failure in the package.
+        .default(enabledTraits: ["ecdh", "musig", "recovery", "schnorrsig", "generator", "rangeproof"]),
         .trait(name: "ecdh"),
         .trait(name: "ellswift"),
         .trait(name: "recovery"),
